@@ -1,0 +1,115 @@
+﻿@{
+    ViewData["Title"] = "İstatistikler";
+    var aylar = ViewBag.Aylar as List<string>;
+    var aylikBasvuru = ViewBag.AylikBasvuru as List<int>;
+    var populerAdliyeler = ViewBag.PopulerAdliyeler as List<string>;
+    var adliyeSayilari = ViewBag.AdliyeSayilari as List<int>;
+}
+<br />
+<div class="container mt-4">
+    <h2 class="mb-4"><i class="fas fa-chart-bar"></i> İstatistikler</h2>
+    <div class="row g-4">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-info text-white">
+                    <i class="fas fa-hourglass-half"></i> Talep Durum Dağılımı
+                </div>
+                <div class="card-body">
+                    <canvas id="durumChart" height="180"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-success text-white">
+                    <i class="fas fa-calendar-alt"></i> Son 6 Ayda Aylık Başvuru
+                </div>
+                <div class="card-body">
+                    <canvas id="aylikChart" height="180"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-warning text-dark">
+                    <i class="fas fa-gavel"></i> En Çok Tercih Edilen Adliyeler
+                </div>
+                <div class="card-body">
+                    <canvas id="adliyeChart" height="120"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-info text-white">
+                    <i class="fas fa-id-card"></i> Unvana Göre Dağılım
+                </div>
+                <div class="card-body">
+                    <canvas id="unvanChart" height="150"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Durum Dağılımı Pie Chart
+        new Chart(document.getElementById('durumChart'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Bekleyen', 'Onaylanan', 'Reddedilen'],
+                datasets: [{
+                    data: [@ViewBag.Bekleyen, @ViewBag.Onaylanan, @ViewBag.Reddedilen],
+                    backgroundColor: ['#FFC107', '#4CAF50', '#E53935']
+                }]
+            }
+        });
+
+        // Aylık Başvuru Line Chart
+        new Chart(document.getElementById('aylikChart'), {
+            type: 'line',
+            data: {
+                labels: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(aylar)),
+                datasets: [{
+                    label: 'Başvuru Sayısı',
+                    data: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(aylikBasvuru)),
+                    borderColor: '#1976D2',
+                    backgroundColor: 'rgba(25, 118, 210, 0.1)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            }
+        });
+
+        // En Popüler Adliyeler Bar Chart
+        new Chart(document.getElementById('adliyeChart'), {
+            type: 'bar',
+            data: {
+                labels: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(populerAdliyeler)),
+                datasets: [{
+                    label: 'Başvuru Sayısı',
+                    data: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(adliyeSayilari)),
+                    backgroundColor: '#FFD600'
+                }]
+            }
+        });
+
+        new Chart(document.getElementById('unvanChart'), {
+    type: 'bar',
+    data: {
+        labels: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Unvanlar)),
+        datasets: [{
+            label: 'Kullanıcı Sayısı',
+            data: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.UnvanSayilari)),
+            backgroundColor: '#1976d2'
+        }]
+    }
+});
+
+    </script>
+}
+
+
+

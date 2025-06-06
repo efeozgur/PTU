@@ -1,0 +1,56 @@
+﻿@{
+    ViewData["Title"] = "Giriş Yap";
+    Layout = null;
+}
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Giriş Yap - Personel Tayin Sistemi</title>
+    <link rel="stylesheet" href="~/plugins/fontawesome-free/css/all.min.css" />
+    <link rel="stylesheet" href="~/dist/css/adminlte.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" />
+    <style>
+        body {
+            background: #002147;
+        }
+    </style>
+</head>
+<body class="hold-transition login-page" style="background:#002147;">
+    <div class="login-box">
+        <div class="login-logo">
+            <img src="~/img/beyazlogo.png" style="height:60px;" class="mb-2" />
+            <br />
+            <b style="color:white">Personel</b> <i style="color:white">Tayin Sistemi</i>
+        </div>
+        <div class="card shadow">
+            <div class="card-body login-card-body">
+                <form method="post" autocomplete="off">
+                    <div class="input-group mb-3">
+                        <input type="text" name="sicilNo" class="form-control" placeholder="Sicil Numarası" required maxlength="50" />
+                        <div class="input-group-append">
+                            <div class="input-group-text"><span class="fas fa-id-card"></span></div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="password" name="sifre" class="form-control" placeholder="Şifre" required maxlength="50" />
+                        <div class="input-group-append">
+                            <div class="input-group-text"><span class="fas fa-lock"></span></div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Giriş Yap</button>
+                </form>
+                @if (ViewBag.Hata != null)
+                {
+                    <div class="alert alert-danger mt-3 text-center">@ViewBag.Hata</div>
+                }
+            </div>
+        </div>
+    </div>
+</body>
+</html>

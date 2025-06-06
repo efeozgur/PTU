@@ -1,0 +1,35 @@
+﻿<!-- İşte AdminLTE'nin çalışması için minimum doğru Layout yapısı -->
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewData["Title"] - Admin Panel</title>
+
+    <link rel="stylesheet" href="@Url.Content("~/plugins/fontawesome-free/css/all.min.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/css/adminlte.min.css")" />
+    <link href="@Url.Content("~/css/Ozel.css")" rel="stylesheet" />
+
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+
+        @Html.Partial("_Navbar")
+        @Html.Partial("_Sidebar")
+
+        <div class="content-wrapper">
+            @RenderBody()
+        </div>
+
+        @Html.Partial("_Footer")
+    </div>
+
+    <!-- JS Scripts -->
+    <script src="@Url.Content("~/plugins/jquery/jquery.min.js")"></script>
+    <script src="@Url.Content("~/plugins/bootstrap/js/bootstrap.bundle.min.js")"></script>
+    <script src="@Url.Content("~/dist/js/adminlte.min.js")"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

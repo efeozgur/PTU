@@ -1,0 +1,85 @@
+﻿@{
+    var isAdmin = Context.Session.GetInt32("IsAdmin") == 1;
+}
+<!-- Sidebar -->
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    @if (!isAdmin)
+    {
+        <a href="~/Home/Index" class="brand-link">
+            <img src="~/img/beyazlogo.png" alt="PTS Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+            <span class="brand-text font-weight-light">Tayin Sistemi</span>
+        </a>
+    }
+    else
+    {
+        <a href="~/Admin/Index" class="brand-link">
+            <img src="~/img/logo.png" alt="PTS Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+            <span class="brand-text font-weight-light">Tayin Sistemi</span>
+        </a>
+    }
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <li class="nav-item">
+                    @if (!isAdmin)
+                    {
+                        <a href="~/Home/Index" class="nav-link">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>Anasayfa</p>
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="~/Admin/Index" class="nav-link">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>Anasayfa</p>
+                        </a>
+                    }
+
+                </li>
+                @if (!isAdmin)
+                {
+
+
+                    <li class="nav-item">
+                        <a href="~/TayinTalebi/Ekle" class="nav-link">
+                            <i class="nav-icon fas fa-users"></i>
+                            <p>Tayin Talebi Oluştur</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="~/TayinTalebi/Taleplerim" class="nav-link">
+                            <i class="nav-icon fas fa-exchange-alt"></i>
+                            <p>Önceki Taleplerim</p>
+                        </a>
+                    </li>
+
+                }
+                @if (isAdmin)
+                {
+                    <li class="nav-item">
+                        <a href="~/Kullanicilar" class="nav-link">
+                            <i class="nav-icon fas fa-chart-bar"></i>
+                            <p>Kullanıcı Tanımla</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="~/Istatistik" class="nav-link">
+                            <i class="nav-icon fas fa-chart-bar"></i>
+                            <p>İstatistikler</p>
+                        </a>
+                    </li>
+                }
+                <!-- Daha fazla menü eklenebilir -->
+            </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+</aside>
+<!-- /Sidebar -->
