@@ -7,7 +7,7 @@ BEGIN
     );
 END;
 GO
-
+ 
 BEGIN TRANSACTION;
 CREATE TABLE [Adliyeler] (
     [Id] int NOT NULL IDENTITY,
