@@ -59,7 +59,7 @@ namespace PTU.Controllers
                 }
             }
 
-            // Hataları görmek için tekrar ViewBag doldur:
+          
             ViewBag.TalepTurleri = new List<string> { "Sağlık", "Aile Birliği", "Kendi İsteği", "Diğer" };
             ViewBag.Adliyeler = AdliyeListesi();
             return View(talep);
@@ -85,7 +85,6 @@ namespace PTU.Controllers
             return new List<string>
         {
             "Adana Adliyesi","Adıyaman Adliyesi","Afyonkarahisar Adliyesi","Ağrı Adliyesi","Aksaray Adliyesi",
-            // ... 81 ilin tamamı buraya
             "Yalova Adliyesi","Yozgat Adliyesi","Zonguldak Adliyesi"
         };
         }
