@@ -9,9 +9,8 @@ Bu proje, ASP.NET Core MVC kullanılarak geliştirilmiş, personellerin tayin ta
 - MSSQL Veritabanı
 - Bootstrap 5 (responsive tasarım)
 - Chart.js (grafikler)
-- BCrypt.Net (şifre güvenliği)
 - Session tabanlı kimlik doğrulama
-- Loglama (TXT dosyasına)
+- Loglama (Admin Panelde bütün loglar sayfalı şekilde gözükür)
 
 ---
 
@@ -23,18 +22,18 @@ Bu proje, ASP.NET Core MVC kullanılarak geliştirilmiş, personellerin tayin ta
 - Kendi taleplerini görür
 
 ### 🛡️ Yönetici (Admin)
-- Varsayılan olarak admin sicili 96600 sifre 1'dir.
-- Tüm talepleri görür
+- Add-Migration Init - Update-Database işleminden sonra Personeller tablosundan kullanıcı ekleyip Admin'i True yaptıktan sonra uygulamaya sicil ve şifre ile girilebilir.
+- Yönetici Tüm talepleri görür
 - Talep durumlarını değiştirir ve talepleri siler
 - İstatistik sayfasını görüntüler
 - Pasta grafik ile dağılımı görür
+- Loglama sayfasına erişebilir
 
 ---
 
 ## 🔐 Giriş Sistemi
 
 - Sicil No + Şifre ile oturum açılır
-- Şifreler veritabanında **BCrypt ile hashlenmiş** olarak saklanır
 - Session üzerinden kimlik doğrulama yapılır
 - Admin yetkisi Session üzerinden kontrol edilir
 
@@ -49,8 +48,7 @@ Bu proje, ASP.NET Core MVC kullanılarak geliştirilmiş, personellerin tayin ta
 | Yönetici Paneli                  | Talepler görüntülenebilir, silinir         |
 | Filtreleme & Arama               | Ad, adliye, talep türüne göre arama        |
 | Talep Durumu Yönetimi            | Onaylandı / Reddedildi / Bekliyor seçimi   |
-| Şifre Hashleme                   | BCrypt ile güvenli parola saklama          |
-| Loglama                          | Önemli işlemler `log.txt` dosyasına yazılır|
+| Loglama                          | Loglar database'e yazılır ve Panelde gözükür|
 | İstatistik Sayfası               | Sayısal ve grafiksel özetler               |
 | Pasta Grafik                     | Chart.js ile taleplerin görsel dağılımı    |
 | Responsive Tasarım               | Tüm cihazlara uygun görünüm                |
