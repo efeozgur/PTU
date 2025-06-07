@@ -1,59 +1,62 @@
-﻿@model TayinTalebi
+﻿    @model TayinTalebi
 
-@{
-    ViewData["Title"] = "Tayin Talebi Oluştur";
-    var talepTurleri = ViewBag.TalepTurleri as List<string>;
-    var adliyeler = ViewBag.Adliyeler as List<string>;
-}
-<br />
-<div class="container mt-4">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card shadow">
-                <div class="card-header bg-success text-white">
-                    <h4 class="mb-0"><i class="fas fa-plus-circle"></i> Tayin Talebi Oluştur</h4>
-                </div>
-                <div class="card-body">
-                    <form asp-action="Ekle" method="post">
-                        <div class="mb-3">
-                            <label asp-for="TalepTuru" class="form-label">Talep Türü</label>
-                            <select asp-for="TalepTuru" class="form-select form-control" required>
-                                <option value="">-- Seçiniz --</option>
-                                @foreach (var item in talepTurleri)
-                                {
-                                    <option value="@item">@item</option>
-                                }
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label asp-for="TercihAdliye" class="form-label">Tercih Ettiğiniz Adliye</label>
-                            <select asp-for="TercihAdliye" class="form-select form-control" required>
-                                <option value="">-- Seçiniz --</option>
-                                @foreach (var item in adliyeler)
-                                {
-                                    <option value="@item">@item</option>
-                                }
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label asp-for="Aciklama" class="form-label">Açıklama</label>
-                            <textarea asp-for="Aciklama" class="form-control" rows="3" maxlength="500"></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-success w-100">Talebi Gönder</button>
-                    </form>
+    @{
+        ViewData["Title"] = "Tayin Talebi Oluştur";
+        var talepTurleri = ViewBag.TalepTurleri as List<string>;
+        var adliyeler = ViewBag.Adliyeler as List<string>;
+    }
+    <br />
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow">
+                    <div class="card-header bg-success text-white">
+                        <h4 class="mb-0"><i class="fas fa-plus-circle"></i> Tayin Talebi Oluştur</h4>
+                     
+                    </div>
+                    <div class="card-body">
+                        <form asp-action="Ekle" method="post">
+                            <div class="mb-3">
+                                <label asp-for="TalepTuru" class="form-label">Talep Türü</label>
+                                <select asp-for="TalepTuru" class="form-select form-control" required>
+                                    <option value="">-- Seçiniz --</option>
+                                    @foreach (var item in talepTurleri)
+                                    {
+                                        <option value="@item">@item</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="TercihAdliye" class="form-label">Tercih Ettiğiniz Adliye</label>
+                                <select asp-for="TercihAdliye" class="form-select form-control" required>
+                                    <option value="">-- Seçiniz --</option>
+                                    @foreach (var item in adliyeler)
+                                    {
+                                        <option value="@item">@item</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="Aciklama" class="form-label">Açıklama</label>
+                                <textarea asp-for="Aciklama" class="form-control" rows="3" maxlength="500"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-success w-100">Talebi Gönder</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-@if (!ViewData.ModelState.IsValid)
-{
-    <div class="alert alert-danger">
-        <ul>
-            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
-            {
-                <li>@error.ErrorMessage</li>
-            }
-        </ul>
-    </div>
-}
+
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger">
+            <ul>
+                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    <li>@error.ErrorMessage</li>
+                }
+            </ul>
+        </div>
+    }

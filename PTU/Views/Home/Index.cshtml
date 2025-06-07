@@ -3,32 +3,43 @@
     ViewData["Title"] = "Ana Sayfa";
 }
 <br />
-<div class="container mt-4">
+<div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-lg-8">
-            <div class="card shadow-lg">
-           
-                <div class="card-header bg-primary text-white">
-                    <h4 class="mb-0">Hoş geldiniz, @Model.AdSoyad!</h4>
+            <div class="card shadow border-0 rounded-4">
+
+                <div class="card-header text-white rounded-top-4"
+                     style="background: linear-gradient(135deg, #007bff, #6610f2);">
+                    <h3 class="mb-0 fw-bold">
+                        👋 Hoş geldiniz, @Model.AdSoyad!
+                    </h3>
                 </div>
-                <div class="card-body">
-                    <div class="mb-3">
-                        <span class="badge bg-info text-dark fs-5">@Model.Unvan</span>
-                        <span class="badge bg-secondary fs-5 ms-2">Sicil No: @Model.SicilNo</span>
+
+                <div class="card-body bg-light rounded-bottom-4">
+                    <div class="mb-4">
+                        <span class="badge bg-info text-dark fs-5 me-2">
+                            <i class="fas fa-user-tie me-1"></i> @Model.Unvan
+                        </span>
+                        <span class="badge bg-dark fs-5">
+                            <i class="fas fa-id-badge me-1"></i> Sicil No: @Model.SicilNo
+                        </span>
                     </div>
-                    <p>
+
+                    <p class="fs-5 text-muted">
                         Personel Tayin Uygulaması’na giriş yaptınız.
                         Buradan yeni tayin talebi oluşturabilir ve mevcut taleplerinizi görüntüleyebilirsiniz.
                     </p>
-                    <div class="d-flex gap-3 mt-4">
-                        <a href="/TayinTalebi/Ekle" class="btn btn-success btn-lg">
-                            <i class="fas fa-plus-circle"></i> Tayin Talebi Oluştur
+
+                    <div class="d-flex flex-column flex-md-row gap-3 mt-4">
+                        <a href="/TayinTalebi/Ekle" class="btn btn-success btn-lg shadow-sm w-100">
+                            <i class="fas fa-plus-circle me-1"></i> Tayin Talebi Oluştur
                         </a>
-                        <a href="/Kullanicilar/Taleplerim" class="btn btn-outline-primary btn-lg">
-                            <i class="fas fa-list"></i> Taleplerim
+                        <a href="/Kullanicilar/Taleplerim" class="btn btn-outline-primary btn-lg shadow-sm w-100">
+                            <i class="fas fa-list me-1"></i> Taleplerim
                         </a>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>

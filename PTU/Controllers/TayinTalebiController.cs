@@ -34,6 +34,9 @@ namespace PTU.Controllers
             ModelState.Remove("Personel");
             ModelState.Remove("TalepDurumu");
             var personelId = HttpContext.Session.GetInt32("PersonelId");
+            var buYil = DateTime.Now.Year;
+            bool ayniYildaTalepVarMi = _context.TayinTalepleri
+                .Any(x => x.PersonelId == personelId && x.BasvuruTarihi.Year == buYil);
             Console.WriteLine("Session PersonelId: " + personelId);
             if (personelId == null)
                 return RedirectToAction("Index", "Login");
@@ -44,10 +47,16 @@ namespace PTU.Controllers
 
             if (ModelState.IsValid)
             {
-                
-                _context.TayinTalepleri.Add(talep);
-                _context.SaveChanges();
-                return RedirectToAction("Taleplerim");
+                if (ayniYildaTalepVarMi)
+                {
+                    ModelState.AddModelError("", "Bu yıl zaten bir tayin talebiniz var. Lütfen önceki talebinizi (Onaylanmadıysa) iptal edin.");
+                }
+                else
+                {
+                    _context.TayinTalepleri.Add(talep);
+                    _context.SaveChanges();
+                    return RedirectToAction("Taleplerim");
+                }
             }
 
             // Hataları görmek için tekrar ViewBag doldur:
