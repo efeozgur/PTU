@@ -25,7 +25,7 @@ Bu proje, ASP.NET Core MVC kullanılarak geliştirilmiş, personellerin tayin ta
 ### 🛡️ Yönetici (Admin)
 - Add-Migration Init - Update-Database işleminden sonra Personeller tablosundan kullanıcı ekleyip Admin'i True yaptıktan sonra uygulamaya sicil ve şifre ile girilebilir.
 - Yönetici Tüm talepleri görür
-- Talep durumlarını değiştirir ve talepleri siler
+- Talepler üzerinde Onaylama ve Reddetme İşlemleri yapar. 
 - İstatistik sayfasını görüntüler
 - Pasta grafik ile dağılımı görür
 - Loglama sayfasına erişebilir
