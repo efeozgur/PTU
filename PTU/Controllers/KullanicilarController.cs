@@ -104,4 +104,56 @@ public class KullanicilarController : Controller
         }
         return RedirectToAction("Index");
     }
+
+    public IActionResult Taleplerim()
+    {
+        var personelId = HttpContext.Session.GetInt32("PersonelId");
+        if (personelId == null)
+            return RedirectToAction("Index", "Login");
+
+        var talepler = _context.TayinTalepleri
+            .Where(x => x.PersonelId == personelId)
+            .OrderByDescending(x => x.BasvuruTarihi)
+            .ToList();
+
+        return View(talepler);
+    }
+    [HttpGet]
+    public IActionResult TalepDuzenle(int id)
+    {
+        var personelId = HttpContext.Session.GetInt32("PersonelId");
+        var talep = _context.TayinTalepleri.FirstOrDefault(x => x.Id == id && x.PersonelId == personelId && x.TalepDurumu == "Bekliyor");
+        if (talep == null)
+            return RedirectToAction("Taleplerim");
+        return View(talep);
+    }
+
+    [HttpPost]
+    public IActionResult TalepDuzenle(TayinTalebi model)
+    {
+        var personelId = HttpContext.Session.GetInt32("PersonelId");
+        var talep = _context.TayinTalepleri.FirstOrDefault(x => x.Id == model.Id && x.PersonelId == personelId && x.TalepDurumu == "Bekliyor");
+        if (talep != null)
+        {
+            talep.TalepTuru = model.TalepTuru;
+            talep.TercihAdliye = model.TercihAdliye;
+            talep.Aciklama = model.Aciklama;
+            _context.SaveChanges();
+        }
+        return RedirectToAction("Taleplerim");
+    }
+
+    [HttpPost]
+    public IActionResult TalepSil(int id)
+    {
+        var personelId = HttpContext.Session.GetInt32("PersonelId");
+        var talep = _context.TayinTalepleri.FirstOrDefault(x => x.Id == id && x.PersonelId == personelId && x.TalepDurumu == "Bekliyor");
+        if (talep != null)
+        {
+            _context.TayinTalepleri.Remove(talep);
+            _context.SaveChanges();
+        }
+        return RedirectToAction("Taleplerim");
+    }
+
 }

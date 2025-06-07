@@ -1,0 +1,25 @@
+﻿@model PTU.Models.TayinTalebi
+@{
+    ViewData["Title"] = "Talep Güncelle";
+}
+
+<div class="container mt-4">
+    <h3>Talep Güncelle</h3>
+    <form asp-action="TalepDuzenle" method="post">
+        <input type="hidden" asp-for="Id" />
+        <div class="mb-3">
+            <label asp-for="TalepTuru" class="form-label">Talep Türü</label>
+            <input asp-for="TalepTuru" class="form-control" required />
+        </div>
+        <div class="mb-3">
+            <label asp-for="TercihAdliye" class="form-label">Tercih Edilen Adliye</label>
+            <input asp-for="TercihAdliye" class="form-control" required />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Aciklama" class="form-label">Açıklama</label>
+            <textarea asp-for="Aciklama" class="form-control"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Kaydet</button>
+        <a href="/Kullanicilar/Taleplerim" class="btn btn-secondary">İptal</a>
+    </form>
+</div>
