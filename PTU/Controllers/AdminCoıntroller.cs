@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PTU.Context;
-using PTU.Models;
 
 public class AdminController : Controller
 {
@@ -14,28 +13,6 @@ public class AdminController : Controller
 
     public IActionResult Index(string arama = "")
     {
-        //var personelId = HttpContext.Session.GetInt32("PersonelId");
-        //if (personelId == null)
-        //    return RedirectToAction("Index", "Login");
-
-        //var admin = _context.Personeller.FirstOrDefault(x => x.Id == personelId);
-        //if (admin == null || !admin.IsAdmin)
-        //    return RedirectToAction("Index", "Home");
-
-        //// İstatistikler
-        //ViewBag.ToplamPersonel = _context.Personeller.Count();
-        //ViewBag.ToplamTalep = _context.TayinTalepleri.Count();
-        //ViewBag.BekleyenTalep = _context.TayinTalepleri.Count(x => x.TalepDurumu == "Bekliyor");
-        //ViewBag.OnaylananTalep = _context.TayinTalepleri.Count(x => x.TalepDurumu == "Onaylandı");
-        //ViewBag.ReddedilenTalep = _context.TayinTalepleri.Count(x => x.TalepDurumu == "Reddedildi");
-
-        //var talepler = _context.TayinTalepleri
-        //    .Include(x => x.Personel)
-        //    .OrderByDescending(x => x.BasvuruTarihi)
-        //    .ToList();
-
-        //return View(talepler);
-
         var personelId = HttpContext.Session.GetInt32("PersonelId");
         if (personelId == null)
             return RedirectToAction("Index", "Login");
@@ -44,7 +21,7 @@ public class AdminController : Controller
         if (admin == null || !admin.IsAdmin)
             return RedirectToAction("Index", "Home");
 
-        // İstatistikler (Aynen kalacak!)
+        
         ViewBag.ToplamPersonel = _context.Personeller.Count();
         ViewBag.ToplamTalep = _context.TayinTalepleri.Count();
         ViewBag.BekleyenTalep = _context.TayinTalepleri.Count(x => x.TalepDurumu == "Bekliyor");
@@ -92,4 +69,22 @@ public class AdminController : Controller
         }
         return RedirectToAction("Index");
     }
+
+    public IActionResult Loglar(int page = 1, int pageSize = 10)
+    {
+        var totalLogs = _context.Loglar.Count();
+        var loglar = _context.Loglar
+            .OrderByDescending(x => x.Tarih)
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .ToList();
+
+        ViewBag.CurrentPage = page;
+        ViewBag.PageSize = pageSize;
+        ViewBag.TotalLogs = totalLogs;
+        ViewBag.TotalPages = (int)Math.Ceiling(totalLogs / (double)pageSize);
+
+        return View(loglar);
+    }
+
 }

@@ -16,9 +16,9 @@ namespace PTU.Models
         public string Unvan { get; set; }
 
         [Required, StringLength(100)]
-        public string Sifre { get; set; } // Hash'lenmiş şekilde sakla!
+        public string Sifre { get; set; } 
 
-        // İsteğe bağlı: Email, Telefon vs. ekleyebilirsin
+     
         public bool IsAdmin { get; set; }   
         public virtual ICollection<TayinTalebi> TayinTalepleri { get; set; }
     }

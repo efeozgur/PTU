@@ -25,7 +25,7 @@ namespace PTU.Controllers
         [HttpPost]
         public IActionResult Index(string sicilNo, string sifre)
         {
-            // Gerçek projede şifreyi hash'lemen gerekir!
+            
             var user = _context.Personeller.FirstOrDefault(x => x.SicilNo == sicilNo && x.Sifre == sifre);
             if (user != null)
             {

@@ -1,0 +1,161 @@
+﻿@model List<PTU.Models.Log>
+@{
+    ViewData["Title"] = "İşlem Logları";
+
+    var currentPage = ViewBag.CurrentPage != null ? (int)ViewBag.CurrentPage : 1;
+    var totalPages = ViewBag.TotalPages != null ? (int)ViewBag.TotalPages : 1;
+    var pageSize = ViewBag.PageSize != null ? (int)ViewBag.PageSize : 25;
+    var totalLogs = ViewBag.TotalLogs != null ? (int)ViewBag.TotalLogs : 0;
+    var maxPageLinks = 7; 
+    var startPage = Math.Max(1, currentPage - maxPageLinks / 2);
+    var endPage = Math.Min(totalPages, startPage + maxPageLinks - 1);
+
+    if (endPage - startPage + 1 < maxPageLinks)
+        startPage = Math.Max(1, endPage - maxPageLinks + 1);
+}
+<br />
+<div class="container mt-4">
+    <div class="row mb-3">
+        <div class="col">
+            <h2 class="fw-bold text-secondary">
+                <i class="fas fa-history"></i> İşlem Logları
+            </h2>
+            <hr class="mt-2 mb-3">
+        </div>
+    </div>
+
+    <form method="get" class="mb-3 d-flex align-items-center gap-2">
+        <label for="pageSize" class="mb-0">Sayfa Boyutu:</label>
+        <select name="pageSize" id="pageSize" onchange="this.form.submit()" class="form-select w-auto ms-2">
+            @foreach (var size in new[] { 10, 25, 50, 100 })
+            {
+                if (size == pageSize)
+                {
+                    <option value="@size" selected>@size</option>
+                }
+                else
+                {
+                    <option value="@size">@size</option>
+                }
+            }
+        </select>
+        <input type="hidden" name="page" value="@currentPage" />
+        <span class="ms-3 text-muted small">Toplam <b>@totalLogs</b> kayıt</span>
+    </form>
+
+    <div class="card shadow">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th style="width:40px;">#</th>
+                            <th><i class="fas fa-user"></i> Personel</th>
+                            <th><i class="fas fa-tasks"></i> İşlem</th>
+                            <th><i class="fas fa-info-circle"></i> Açıklama</th>
+                            <th><i class="fas fa-clock"></i> Tarih</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Count == 0)
+                        {
+                            <tr>
+                                <td colspan="5" class="text-center py-4">
+                                    <i class="fas fa-inbox fa-2x text-secondary mb-2"></i><br />
+                                    <span class="text-muted">Henüz hiç log kaydı bulunmuyor.</span>
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            int index = (currentPage - 1) * pageSize + 1;
+                            foreach (var log in Model)
+                            {
+                                <tr>
+                                    <td class="fw-bold">@index</td>
+                                    <td>
+                                        @if (log.PersonelId.HasValue)
+                                        {
+                                            @: @log.PersonelId
+                                           
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">Anonim</span>
+                                        }
+                                    </td>
+                                    <td>@log.Islem</td>
+                                    <td>
+                                        @if (!string.IsNullOrWhiteSpace(log.Aciklama))
+                                        {
+                                            @log.Aciklama
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">-</span>
+                                        }
+                                    </td>
+                                    <td>@log.Tarih.ToString("dd.MM.yyyy HH:mm")</td>
+                                </tr>
+                                index++;
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    @* SAYFALAMA *@
+    @if (totalPages > 1)
+    {
+        <nav class="mt-4">
+            <ul class="pagination justify-content-center">
+                <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+                    <a class="page-link" href="?page=@(currentPage-1)&pageSize=@pageSize">&laquo;</a>
+                </li>
+
+                @if (startPage > 1)
+                {
+                    <li class="page-item"><a class="page-link" href="?page=1&pageSize=@pageSize">1</a></li>
+                    @if (startPage > 2)
+                    {
+                        <li class="page-item disabled"><span class="page-link">...</span></li>
+                    }
+                }
+
+                @for (int i = startPage; i <= endPage; i++)
+                {
+                    <li class="page-item @(i == currentPage ? "active" : "")">
+                        <a class="page-link" href="?page=@i&pageSize=@pageSize">@i</a>
+                    </li>
+                }
+
+                @if (endPage < totalPages)
+                {
+                    if (endPage < totalPages - 1)
+                    {
+                        <li class="page-item disabled"><span class="page-link">...</span></li>
+                    }
+                    <li class="page-item"><a class="page-link" href="?page=@totalPages&pageSize=@pageSize">@totalPages</a></li>
+                }
+
+                <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
+                    <a class="page-link" href="?page=@(currentPage+1)&pageSize=@pageSize">&raquo;</a>
+                </li>
+            </ul>
+        </nav>
+    }
+</div>
+<br />
+<style>
+    .card {
+        border-radius: 18px !important;
+        box-shadow: 0 4px 18px rgba(0,0,0,0.12) !important;
+    }
+
+    .table > tbody > tr:hover {
+        background: #f8fafd !important;
+        transition: background 0.2s;
+    }
+</style>

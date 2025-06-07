@@ -7,13 +7,13 @@ namespace PTU.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        
         MyContext _context;
 
-        public HomeController(ILogger<HomeController> logger, MyContext context)
+        public HomeController( MyContext context)
         {
-            _logger = logger;
-            _context = context; // Context'i burada baþlatýyoruz
+            
+            _context = context; 
         }
 
         public IActionResult Index()
@@ -28,7 +28,7 @@ namespace PTU.Controllers
 
         public IActionResult Privacy()
         {
-            _logger.LogInformation("Privacy page accessed at {Time}", DateTime.UtcNow);
+        
             return View();
         }
 

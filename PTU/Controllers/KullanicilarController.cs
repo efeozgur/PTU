@@ -52,6 +52,14 @@ public class KullanicilarController : Controller
             ViewBag.Hata = "Aynı Sicil Numarasına sahip kullanıcı zaten var!";
             return View(model);
         }
+        _context.Loglar.Add(new Log
+        {
+            PersonelId = (int)personelId,
+            Islem = "Kullanıcı Ekleme",
+            Aciklama = $"{admin.AdSoyad} yeni kullanıcı ekledi: {model.AdSoyad} ({model.SicilNo})",
+            Tarih = DateTime.Now
+        });
+
         _context.Personeller.Add(model);
         _context.SaveChanges();
         return RedirectToAction("Index");
@@ -81,6 +89,15 @@ public class KullanicilarController : Controller
         if (admin == null || !admin.IsAdmin)
             return RedirectToAction("Index", "Home");
 
+        _context.Loglar.Add(new Log
+        {
+            PersonelId = (int)personelId,
+            Islem = "Kullanıcı Düzenleme",
+            Aciklama = $"{admin.AdSoyad} kullanıcısını düzenledi: {model.AdSoyad} ({model.SicilNo})",
+            Tarih = DateTime.Now
+        });
+
+
         _context.Personeller.Update(model);
         _context.SaveChanges();
         return RedirectToAction("Index");
@@ -99,6 +116,13 @@ public class KullanicilarController : Controller
         var silinecek = _context.Personeller.Find(id);
         if (silinecek != null)
         {
+            _context.Loglar.Add(new Log
+            {
+                PersonelId = (int)personelId,
+                Islem = "Kullanıcı Silme",
+                Aciklama = $"{admin.AdSoyad} kullanıcısını sildi: {silinecek.AdSoyad} ({silinecek.SicilNo})",
+                Tarih = DateTime.Now
+            });
             _context.Personeller.Remove(silinecek);
             _context.SaveChanges();
         }
@@ -138,6 +162,13 @@ public class KullanicilarController : Controller
             talep.TalepTuru = model.TalepTuru;
             talep.TercihAdliye = model.TercihAdliye;
             talep.Aciklama = model.Aciklama;
+            _context.Loglar.Add(new Log
+            {
+                PersonelId = (int)personelId,
+                Islem = "Tayin Talebi Düzenleme",
+                Aciklama = $"{HttpContext.Session.GetString("AdSoyad")} tayin talebini düzenledi: {talep.TalepTuru} - {talep.TercihAdliye}",
+                Tarih = DateTime.Now
+            });
             _context.SaveChanges();
         }
         return RedirectToAction("Taleplerim");
@@ -150,10 +181,20 @@ public class KullanicilarController : Controller
         var talep = _context.TayinTalepleri.FirstOrDefault(x => x.Id == id && x.PersonelId == personelId && x.TalepDurumu == "Bekliyor");
         if (talep != null)
         {
+            _context.Loglar.Add(new Log
+            {
+                PersonelId = (int)personelId,
+                Islem = "Tayin Talebi Silme",
+                Aciklama = $"{HttpContext.Session.GetString("AdSoyad")} tayin talebini sildi: {talep.TalepTuru} - {talep.TercihAdliye}",
+                Tarih = DateTime.Now
+            });
+
+
             _context.TayinTalepleri.Remove(talep);
             _context.SaveChanges();
         }
         return RedirectToAction("Taleplerim");
     }
 
+    
 }

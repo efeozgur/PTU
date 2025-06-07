@@ -22,7 +22,7 @@ namespace PTU.Controllers
 
             // Talep türleri ve adliye listesini ViewBag ile View'e taşıyoruz
             ViewBag.TalepTurleri = new List<string> { "Sağlık", "Aile Birliği", "Kendi İsteği", "Diğer" };
-            ViewBag.Adliyeler = AdliyeListesi(); // Aşağıda örneği var
+            ViewBag.Adliyeler = AdliyeListesi(); 
 
             return View();
         }
@@ -34,6 +34,7 @@ namespace PTU.Controllers
             ModelState.Remove("Personel");
             ModelState.Remove("TalepDurumu");
             var personelId = HttpContext.Session.GetInt32("PersonelId");
+            var kisi = HttpContext.Session.GetString("AdSoyad");
             var buYil = DateTime.Now.Year;
             bool ayniYildaTalepVarMi = _context.TayinTalepleri
                 .Any(x => x.PersonelId == personelId && x.BasvuruTarihi.Year == buYil);
@@ -53,13 +54,20 @@ namespace PTU.Controllers
                 }
                 else
                 {
+                    _context.Loglar.Add(new Log
+                    {
+                        PersonelId = (int)personelId,
+                        Islem = "Tayin Talebi Ekleme",
+                        Tarih = DateTime.Now,
+                        Aciklama = kisi + " tarafından tayin talebi eklendi: " + talep.TalepTuru + " - " + talep.TercihAdliye
+                    });
                     _context.TayinTalepleri.Add(talep);
                     _context.SaveChanges();
                     return RedirectToAction("Taleplerim");
                 }
             }
 
-          
+
             ViewBag.TalepTurleri = new List<string> { "Sağlık", "Aile Birliği", "Kendi İsteği", "Diğer" };
             ViewBag.Adliyeler = AdliyeListesi();
             return View(talep);
