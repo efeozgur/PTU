@@ -120,7 +120,7 @@ public class KullanicilarController : Controller
             {
                 PersonelId = (int)personelId,
                 Islem = "Kullanıcı Silme",
-                Aciklama = $"{admin.AdSoyad} kullanıcısını sildi: {silinecek.AdSoyad} ({silinecek.SicilNo})",
+                Aciklama = $"{admin.AdSoyad} ({silinecek.SicilNo}) sicil numaralı {silinecek.AdSoyad} kullanıcısını sildi.",
                 Tarih = DateTime.Now
             });
             _context.Personeller.Remove(silinecek);
@@ -166,7 +166,7 @@ public class KullanicilarController : Controller
             {
                 PersonelId = (int)personelId,
                 Islem = "Tayin Talebi Düzenleme",
-                Aciklama = $"{HttpContext.Session.GetString("AdSoyad")} tayin talebini düzenledi: {talep.TalepTuru} - {talep.TercihAdliye}",
+                Aciklama = $"{HttpContext.Session.GetString("AdSoyad")} kendi talebini düzenledi: {talep.TalepTuru} - {talep.TercihAdliye}",
                 Tarih = DateTime.Now
             });
             _context.SaveChanges();
@@ -185,7 +185,7 @@ public class KullanicilarController : Controller
             {
                 PersonelId = (int)personelId,
                 Islem = "Tayin Talebi Silme",
-                Aciklama = $"{HttpContext.Session.GetString("AdSoyad")} tayin talebini sildi: {talep.TalepTuru} - {talep.TercihAdliye}",
+                Aciklama = $"{HttpContext.Session.GetString("AdSoyad")} kendi tayin talebini sildi: {talep.TalepTuru} - {talep.TercihAdliye}",
                 Tarih = DateTime.Now
             });
 
