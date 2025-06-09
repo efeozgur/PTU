@@ -6,6 +6,7 @@ using PTU.Models;
 public class KullanicilarController : Controller
 {
     private readonly MyContext _context;
+
     public KullanicilarController(MyContext context)
     {
         _context = context;
@@ -97,7 +98,6 @@ public class KullanicilarController : Controller
             Tarih = DateTime.Now
         });
 
-
         _context.Personeller.Update(model);
         _context.SaveChanges();
         return RedirectToAction("Index");
@@ -142,6 +142,7 @@ public class KullanicilarController : Controller
 
         return View(talepler);
     }
+
     [HttpGet]
     public IActionResult TalepDuzenle(int id)
     {
@@ -188,13 +189,9 @@ public class KullanicilarController : Controller
                 Aciklama = $"{HttpContext.Session.GetString("AdSoyad")} kendi tayin talebini sildi: {talep.TalepTuru} - {talep.TercihAdliye}",
                 Tarih = DateTime.Now
             });
-
-
             _context.TayinTalepleri.Remove(talep);
             _context.SaveChanges();
         }
         return RedirectToAction("Taleplerim");
     }
-
-    
 }
