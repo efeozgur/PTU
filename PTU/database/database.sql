@@ -87,6 +87,6 @@ INSERT INTO [dbo].[Loglar] ([Id], [PersonelId], [Islem], [Tarih], [Aciklama]) VA
 (2, 6, N'Tayin Talebi Ekleme', '2025-06-07T21:23:46.6613754', N'Tayin talebi eklendi: Aile Birliği - Ağrı Adliyesi'),
 (3, 7, N'Tayin Talebi Ekleme', '2025-06-07T21:27:05.9518605', N'Serkan ALTINBAŞ tarafından tayin talebi eklendi: Kendi İsteği - Adıyaman Adliyesi'),
 (19, 7, N'Tayin Talebi Ekleme', '2025-06-09T20:43:02.1006220', N'Serkan ALTINBAŞ tarafından tayin talebi eklendi: Aile Birliği - Yalova Adliyesi')
--- (isteğe bağlı olarak diğer logları da ekleyebilirsin)
+
 SET IDENTITY_INSERT [dbo].[Loglar] OFF
 GO
